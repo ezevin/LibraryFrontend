@@ -5,6 +5,9 @@ Rails.application.routes.draw do
       resources :users
       resources :book_shelves
       resources :books
+
+      post '/auth', to: 'auth#create'
+      get '/current_user', to: 'auth#show'
       # resources :application
       # post
       # post '/books/search', to: 'books#search'

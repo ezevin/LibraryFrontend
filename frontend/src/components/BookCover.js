@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import BookInfo from './BookInfo'
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Button, Card, Image, Grid } from 'semantic-ui-react'
 
 class BookCover extends Component {
 
@@ -13,17 +12,16 @@ class BookCover extends Component {
   }
 
   render(){
+    // debugger
       const { title, author, genre, image, id } = this.props.books
       if(this.state.details === false){
       return(
         <center>
-          <Card.Group itemsPerRow={2}>
             <Card raised image={image}>
               <div id={id} className="card two wide column">
                   <Image class="ui image" src={image} alt={title} onClick={this.toggleDetails} />
               </div>
             </Card>
-          </Card.Group>
         </center>
       )}
       else if (this.state.details === true){

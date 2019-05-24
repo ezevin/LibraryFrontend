@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
+import { Switch, Route, withRouter } from 'react-router-dom'
+
 
 import Books from './Books'
 import { Search } from 'semantic-ui-react'
 import FilterOptions from '../components/FilterOptions'
+import Menu from '../components/Menu'
+import BookShelf from '../components/BookShelf'
+import BookCover from '../components/BookCover'
+import Login from '../components/Login'
+
 
 class Main extends Component {
 
   state = {
     books: [],
     myBooks: [],
-    search: ''
+    search: '',
+    mine: false
   }
 
   componentDidMount(){
@@ -55,21 +63,35 @@ class Main extends Component {
     this.setState({myBooks: filter})
   }
 
+  toggleDetails = () => {
+    this.setState({mine: !this.state.mine})
+  }
+
   render(){
     const filtered = this.state.books.filter(book => {
       return book.title.toLowerCase().includes(this.state.search.toLowerCase())
     })
 
       return(
-        <><br />
+        <>
+          <br />
+          <Menu mine={this.toggleDetails}/>
           <center>
-            <Search onSearchChange={this.handleSearch} showNoResults={false} /><br />
-            <FilterOptions titles={this.handleTitleSort} authors={this.handleAuthorSort} books={this.state.books}/>
+          Search By Title:
+          <Route path="/login" render={() => <Login />}/> <br />
+          <Search onSearchChange={this.handleSearch} showNoResults={false} /><br />
           </center>
-            <Books books={filtered} myBooks={this.state.myBooks} addToShelf={this.handleShelf} onClick={this.handleClick}/>
+          <FilterOptions titles={this.handleTitleSort} authors={this.handleAuthorSort} books={this.state.books}/>
+          <div>
+          <Route path="/library" render={(props) => <Books {...props} books={filtered} myBooks={this.state.myBooks} addToShelf={this.handleShelf} onClick={this.handleClick} />} />
+          <Route path="/bookshelf" render={(props) => <BookShelf {...props} books={this.state.myBooks} addToShelf={this.handleShelf} onClick={this.handleClick} />} />
+
+          </div>
         </>
       )
   }
 }
 
-export default Main
+export default withRouter(Main)
+
+// <Books books={filtered} myBooks={this.state.myBooks} addToShelf={this.handleShelf} onClick={this.handleClick} />

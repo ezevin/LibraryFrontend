@@ -61,8 +61,8 @@ class FilterOptions extends React.Component {
               <select onChange={() => this.handleFilter()}>
                 <option value="All">Genre</option>
                 <option value="Fantasy">Fantasy</option>
-                <option value="Sportswear">Sportswear</option>
-                <option value="Finance">Finance</option>
+                <option value="Sportswear">Science</option>
+                <option value="Finance">Classic</option>
               </select>
              <Form.Button>Submit</Form.Button>
             </Form>

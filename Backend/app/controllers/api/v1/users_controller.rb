@@ -7,23 +7,31 @@ class Api::V1::UsersController < ApplicationController
         render json: @users.to_json(only: [:name])
     end
 
-    def show
-        @users = User.all
-    end
 
     def new
         @user = User.new
     end
 
     def create
-        @user = User.create(user_params)
-        if @user.valid?
-            session[:user_id] = @user.id
-            redirect_to @user
-        else
-          flash[:errors] = @user.errors.full_messages
-          redirect_to new_user_path
-        end
+        user = User.find_by(name: params[:name])
+        if user && user.authenticate(params[:password])
+            token = issue_token({id: user.id})
+            render json:{id: user.id}
+      end
+    end
+
+    def show
+      # token = request.headers['Authenticate']
+      # decoded = JWT.decode(token, 'secret', true, { algorithm: 'HS256'}).first
+      # id = decoded["id"]
+      #
+      # user = User.find_by(id: token)
+
+      if current_user
+        render json: {id: current_user.id, name: current_user.name}
+      else
+        render json: {error: "could not authenitcate"}, status: 401
+      end
     end
 
     def edit

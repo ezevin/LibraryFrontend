@@ -8,7 +8,6 @@ class Header extends Component {
       <header>
         <br />
         <center> <h1 className="text-center">BookWyrm</h1> </center>
-        <Menu />
       </header>
     );
   }

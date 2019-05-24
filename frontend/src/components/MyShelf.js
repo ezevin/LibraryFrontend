@@ -40,7 +40,7 @@ class MyShelf extends Component {
              <Card.Content extra>
                <div className='ui two buttons'>
                  <Button basic color='green' onClick={() =>this.props.onClick(this.props.books)} positive>
-                   Add To BookShelf
+                   Remove From BookShelf
                  </Button>
                  <Button.Or />
                  <Button basic color='red' onClick={this.toggleDetails}>
