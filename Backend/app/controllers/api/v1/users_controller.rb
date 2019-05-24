@@ -16,7 +16,7 @@ class Api::V1::UsersController < ApplicationController
         user = User.find_by(name: params[:name])
         if user && user.authenticate(params[:password])
             token = issue_token({id: user.id})
-            render json:{id: user.id}
+            render json:{id: user.id, name: user.name, token: token}
       end
     end
 
@@ -30,7 +30,7 @@ class Api::V1::UsersController < ApplicationController
       if current_user
         render json: {id: current_user.id, name: current_user.name}
       else
-        render json: {error: "could not authenitcate"}, status: 401
+        render json: {error: "could not authentcate"}, status: 401
       end
     end
 
@@ -55,7 +55,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def user_params
-        params.require(:user).permit(:name)
+        params.require(:user).permit(:name, :password)
     end
 
 end
