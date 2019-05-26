@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom'
+import { Search, Container } from 'semantic-ui-react'
 
 
 import Books from './Books'
-import { Search } from 'semantic-ui-react'
+import BookShelf from './BookShelf'
 import FilterOptions from '../components/FilterOptions'
 import Menu from '../components/Menu'
-import BookShelf from '../components/BookShelf'
 import BookCover from '../components/BookCover'
 import Login from '../components/Login'
+import AddBook from '../components/AddBook'
+import Profile from '../components/Profile'
 
 
 class Main extends Component {
@@ -17,7 +19,7 @@ class Main extends Component {
     books: [],
     myBooks: [],
     search: '',
-    mine: false
+    newGenre: ''
   }
 
   componentDidMount(){
@@ -67,31 +69,44 @@ class Main extends Component {
     this.setState({mine: !this.state.mine})
   }
 
+  filter = (e) => {
+      this.setState({newGenre: e.target.value}, console.log("filter", this.state.newGenre))
+  }
+
+  addBooks = book => {
+    this.setState({ books: [...this.state.books, book] })
+  }
+
   render(){
+    console.log(this.state.users);
+    const mineId = this.state.myBooks.map(book => book.id)
+
     const filtered = this.state.books.filter(book => {
-      return book.title.toLowerCase().includes(this.state.search.toLowerCase())
+      if(!mineId.includes(book.id)){
+        // console.log("state", this.state.newGenre, "book", book.genre);
+        return                book.title.toLowerCase().includes(this.state.search.toLowerCase())
+      }
     })
 
       return(
         <>
+          <Container>
           <br />
-          <Menu mine={this.toggleDetails}/>
-          <center>
-          Search By Title:
-          <Route path="/login" render={() => <Login />}/> <br />
-          <Search onSearchChange={this.handleSearch} showNoResults={false} /><br />
-          </center>
-          <FilterOptions titles={this.handleTitleSort} authors={this.handleAuthorSort} books={this.state.books}/>
-          <div>
-          <Route path="/library" render={(props) => <Books {...props} books={filtered} myBooks={this.state.myBooks} addToShelf={this.handleShelf} onClick={this.handleClick} />} />
-          <Route path="/bookshelf" render={(props) => <BookShelf {...props} books={this.state.myBooks} addToShelf={this.handleShelf} onClick={this.handleClick} />} />
+          <Route path="/login" render={( ) => <Login handleUserLogin={this.props.handleUserLogin}  handleLogout={this.props.handleLogout}/>}/> <br />
 
-          </div>
+          <Route path="/library" render={(props) => <Books {...props} books={filtered} myBooks={this.state.myBooks} addToShelf={this.handleShelf} onClick={this.handleClick}   titles={this.handleTitleSort} authors={this.handleAuthorSort}  onSearchChange={this.handleSearch}
+          filter={this.filter}
+          />} />
+
+          <Route path="/bookshelf" render={(props) => <BookShelf {...props} books={this.state.myBooks} remove={this.handleShelf} onClick={this.handleClick} titles={this.handleTitleSort} authors={this.handleAuthorSort}  onSearchChange={this.handleSearch} />} />
+
+          <Route path="/newbook" render={(props) => <AddBook {...props} addBooks={this.addBooks}/>} />
+
+          <Route path="/profile" render={(props) => <Profile {...props} addBooks={this.addBooks}/>} />
+          </Container>
         </>
       )
   }
 }
 
 export default withRouter(Main)
-
-// <Books books={filtered} myBooks={this.state.myBooks} addToShelf={this.handleShelf} onClick={this.handleClick} />

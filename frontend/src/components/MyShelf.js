@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Button, Card, Image, Label } from 'semantic-ui-react'
 
 class MyShelf extends Component {
 
@@ -11,24 +11,28 @@ class MyShelf extends Component {
     this.setState({details: !this.state.details})
   }
 
+  // onDrag = (e, this.props.books) => {
+  //   e.preventDefault()
+  //   this.setState({draggedTask: this.props.books})
+  //
+  // }
+
   render(){
       const { title, author, genre, image, id } = this.props.books
       if(this.state.details === false){
       return(
         <center>
-          <Card.Group itemsPerRow={2}>
             <Card raised image={image}>
-              <div id={id} className="card two wide column">
+              <div id={id} className="card two wide column" onDrag={(e) => {console.log("drag")}}>
                   <Image class="ui image" src={image} alt={title} onClick={this.toggleDetails} />
               </div>
             </Card>
-          </Card.Group>
         </center>
       )}
       else if (this.state.details === true){
         return(
           <center>
-            <Card>
+            <Card onClick={this.toggleDetails}>
              <Card.Content>
                <Image floated='right' size='mini' src={image} />
                <Card.Header>{title}</Card.Header>
@@ -38,13 +42,14 @@ class MyShelf extends Component {
                </Card.Description>
              </Card.Content>
              <Card.Content extra>
-               <div className='ui two buttons'>
-                 <Button basic color='green' onClick={() =>this.props.onClick(this.props.books)} positive>
+               <div className='two buttons'>
+
+                 <Button color='red' onClick={()=>this.props.remove(this.props.books)}>
                    Remove From BookShelf
                  </Button>
                  <Button.Or />
-                 <Button basic color='red' onClick={this.toggleDetails}>
-                   Cancel
+                 <Button basic color='brown'>
+                    I've Read This
                  </Button>
                </div>
              </Card.Content>

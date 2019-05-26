@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Image, Grid } from 'semantic-ui-react'
+import { Button, Card, Image, Grid, Container, Reveal } from 'semantic-ui-react'
 
 class BookCover extends Component {
 
@@ -13,7 +13,8 @@ class BookCover extends Component {
 
   render(){
     // debugger
-      const { title, author, genre, image, id } = this.props.books
+      const { title, author, genre, description, image, id } = this.props.books
+
       if(this.state.details === false){
       return(
         <center>
@@ -21,31 +22,25 @@ class BookCover extends Component {
               <div id={id} className="card two wide column">
                   <Image class="ui image" src={image} alt={title} onClick={this.toggleDetails} />
               </div>
-            </Card>
+            </Card><br />
         </center>
       )}
       else if (this.state.details === true){
         return(
           <center>
-            <Card>
-             <Card.Content>
+            <Card onClick={this.toggleDetails}>
+             <Card.Content className="cardBack">
                <Image floated='right' size='mini' src={image} />
                <Card.Header>{title}</Card.Header>
                <Card.Meta>{author}</Card.Meta>
                <Card.Description>
-                 {genre}
+                 {genre} - {description}
                </Card.Description>
              </Card.Content>
              <Card.Content extra>
-               <div className='ui two buttons'>
-                 <Button basic color='green' onClick={() =>this.props.onClick(this.props.books)} positive>
+                 <Button color="brown"onClick={() =>this.props.onClick(this.props.books)} >
                    Add To BookShelf
                  </Button>
-                 <Button.Or />
-                 <Button basic color='red' onClick={this.toggleDetails}>
-                   Cancel
-                 </Button>
-               </div>
              </Card.Content>
            </Card>
           </center>

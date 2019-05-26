@@ -1,15 +1,14 @@
 import React from 'react'
-import { Search, Form } from 'semantic-ui-react'
+import { Search, Form, Reveal, Grid } from 'semantic-ui-react'
 
 import FilterTitles from './FilterTitles'
-import FilterAuthors from './FilterAuthors'
-import FilterGenres from './FilterGenres'
 
 class FilterOptions extends React.Component {
 
   state = {
     value: "",
-    filters: ""
+    filters: "",
+    search: true
   }
 
   handleChange = (e, {value}) => {
@@ -17,55 +16,64 @@ class FilterOptions extends React.Component {
   }
 
   handleFilter = (e) => {
-    this.props.books.map(book => {
-      if(e.target.value === book.genre)
-      console.log(book);
-      return  book
-    })
+    let value = e.target.value
+    this.props.books.filter(book => {
+    if (value === book.genre){
+      console.log(book)
+      return book
+    }})
   }
 
   render(){
 
     const { value } = this.state
-    const options = [
-      { key: '1', text: 'Fantasy', value: 'Fantasy' },
-      { key: '2', text: 'Science', value: 'Science' },
-      { key: '3', text: 'Classic', value: 'Classic' },
-    ]
 
-    if(this.state.filters === "Fantasy"){
-      console.log("yeppers");
-    }else if (this.state.filters === "author"){
-      return <FilterAuthors authors={()=> console.log("boo")}/>
-    }else if (this.state.filters === "genre"){
-      return <FilterGenres authors={()=> console.log("boo")}/>
-    }
-
-    /*<Search onSearchChange={this.props.handleSearch} showNoResults={false} />*/
     return (
       <>
+        <center>
           <br />
-            <Form>
-             <Form.Group inline>
-               <strong>Sort by:</strong>
+          <Form>
+            <p className="color">Search By Title:</p>
+            <Search onSearchChange={this.props.onSearchChange} showNoResults={false} />
+          </Form>
+        </center>
+        <center>
+        <br />
+        <div className="color">Sort by:</div><br />
+          <Form>
+            <Grid>
+              <Grid.Row columns={2}>
+               <Grid.Column width={8}>
                  <label>
-                   <input type="radio" value="Titles" checked={value === 'Titles'} onChange={this.props.titles}/>
-                   Title
+                  <span className="color">Title:     </span>
+                   <input  type="radio" value="Titles" checked={value === 'Titles'} onChange={this.props.titles}
+                   onClick={this.handleTitleSearch}/>
                  </label>
                  <label>
+                 <a>   </a>
+                 <span className="color">Author:     </span>
                    <input type="radio" value="Authors" checked={value === 'Authors'} onChange={this.props.authors}/>
-                   Author
+
                  </label>
                  <br/>
-             </Form.Group>
-              <select onChange={() => this.handleFilter()}>
-                <option value="All">Genre</option>
-                <option value="Fantasy">Fantasy</option>
-                <option value="Sportswear">Science</option>
-                <option value="Finance">Classic</option>
-              </select>
-             <Form.Button>Submit</Form.Button>
-            </Form>
+              </Grid.Column>
+                <Grid.Column  >
+                    <span className="color">Genre:     </span>
+                  <Form.Field >
+                    <select onChange={this.props.filter}>
+                        <option value="null" width={6}></option>
+                      {
+                        this.props.books.map(book =>
+                          <option value={book.genre}>{book.genre}</option>)
+                      }
+                    </select>
+                    <Form.Button color="black">Submit</Form.Button>
+                  </Form.Field>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Form>
+        </center>
         </>
 
     )

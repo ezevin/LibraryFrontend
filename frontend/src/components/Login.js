@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
+import { Form, Segment, Button } from 'semantic-ui-react'
 
 const initialState = {
   error: false,
@@ -23,7 +24,7 @@ class Login extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
     // console.log(this.state.fields);
-    fetch('http://localhost:3001/api/v1/users', {
+    fetch('http://localhost:3001/api/v1/auth', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -37,12 +38,9 @@ class Login extends React.Component {
         this.setState({error: true})
       } else {
         this.props.handleUserLogin(data)
-        this.props.history.push("/")
-        // console.log('data from api', data)
+        this.props.history.push("/library")
       }
     })
-
-    // this.setState(initialState)
   };
 
   render() {
@@ -57,30 +55,25 @@ class Login extends React.Component {
               Try Again
             </div>
           }
-          <form onSubmit={this.handleSubmit}>
-            <div className="ui field">
-              <label>Username</label>
-              <input
-                name="username"
-                placeholder="username"
-                value={fields.username}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="ui field">
-              <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                placeholder="password"
-                value={fields.password}
-                onChange={this.handleChange}
-              />
-            </div>
-            <button type="submit" className="ui basic green button">
-              Login
-            </button>
-          </form>
+          <center>
+            <Form size='medium' onSubmit={this.handleSubmit}>
+               <Form.Input width={6}
+                 fluid icon='user'
+                 iconPosition='left'
+                 placeholder='Username'
+                 onChange={this.handleChange}/>
+               <Form.Input width={6}
+                 fluid icon='lock'
+                 iconPosition='left'
+                 placeholder='Password'
+                 type='password'
+                 onChange={this.handleChange}
+               />
+               <Button color='black' >
+                 Login
+               </Button>
+           </Form>
+         </center>
         </div>
       </div>
     );

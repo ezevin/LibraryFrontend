@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -5,6 +6,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image:url(http://www.monmouthblues.com/wp-content/uploads/2018/03/Modern-Wood-Wall-Panels.jpg);
+  font-family: !important 'Lobster', cursive;
+  font-weight: bold;
+  font-size: large;
+  word-wrap: normal;
+  color: !important #76737C
+
+
 }
 
 code {
@@ -12,13 +21,42 @@ code {
     monospace;
 }
 
+.cardBack{
+  background-color: #A5A5A4;
+  background-color: inherit;
+}
 
 .card{
   width: auto;
-  margin: 0 auto;
   text-align: center;
 }
 
-.shelf{
-  background-image: "https://target.scene7.com/is/image/Target/GUEST_6784394a-78c6-49d7-ab9e-651efcc0bb29?wid=488&hei=488&fmt=pjpeg"
+.color{
+  color: #A3A2A7;
+  font-weight: bold;
+  text-shadow: 3px 2px black
+}
+
+.buttonColor{
+  color: #462016
+}
+
+.textLarge{
+  font-size: xx-large;
+  font-weight: bolder;
+  color: #58555F;
+  text-decoration: underline;
+  text-shadow: 3px 2px black;
+}
+
+.textMedium{
+  font-size: x-large;
+  color: #76737C;
+  text-shadow: 3px 2px black;
+}
+
+.icon{
+  color: #A3A2A7;
+  font-size: xx-large;
+  text-shadow: 3px 2px #0A0806;
 }
