@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
-import { Button, Card, Image, Label } from 'semantic-ui-react'
+import { Button, Card, Image } from 'semantic-ui-react'
 
 class MyShelf extends Component {
 
   state = {
-    details: false
+    details: false,
+    read: false
   }
 
   toggleDetails = () => {
     this.setState({details: !this.state.details})
   }
 
+  handleRead = (e) => {
+    const back = document.getElementsByClassName('flip')
+    e.preventDefault()
+    this.setState({read: !this.state.read})
+    if (this.state.read === true){
+      return back.opacity = 0.5
+    }
+  }
   // onDrag = (e, this.props.books) => {
   //   e.preventDefault()
   //   this.setState({draggedTask: this.props.books})
@@ -22,7 +31,7 @@ class MyShelf extends Component {
       if(this.state.details === false){
       return(
         <center>
-            <Card raised image={image}>
+            <Card className="flip">
               <div id={id} className="card two wide column" onDrag={(e) => {console.log("drag")}}>
                   <Image class="ui image" src={image} alt={title} onClick={this.toggleDetails} />
               </div>
@@ -43,12 +52,11 @@ class MyShelf extends Component {
              </Card.Content>
              <Card.Content extra>
                <div className='two buttons'>
-
                  <Button color='red' onClick={()=>this.props.remove(this.props.books)}>
                    Remove From BookShelf
                  </Button>
-                 <Button.Or />
-                 <Button basic color='brown'>
+                 <Button basic color='brown'
+                    onClick={this.handleRead}>
                     I've Read This
                  </Button>
                </div>

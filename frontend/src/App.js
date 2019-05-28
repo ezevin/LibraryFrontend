@@ -1,11 +1,12 @@
 import React from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom'
-import logo from './logo.svg';
+import { withRouter } from 'react-router-dom'
 import './App.css';
+import { Grid } from 'semantic-ui-react'
 
-import Header from './components/Header'
+
+import Logo from './components/Logo'
 import Main from './containers/Main'
-import Login from './components/Login'
+import Friends from './components/Friends'
 
 class App extends React.Component {
 
@@ -55,10 +56,10 @@ class App extends React.Component {
   }
 
   render(){
-    console.log(this.state.users);
+    // console.log(this.state.users);
     return (
       <>
-        <Header
+        <Logo
           title={this.props.title}
           icon="paint brush"
           handlePageClick={this.handlePageClick}
@@ -66,12 +67,19 @@ class App extends React.Component {
           users={this.state.users}
           addUser={this.addUser}
         />
-        <Main
-          handleLogout={this.handleLogout}
-          handleUserLogin={this.handleUserLogin}
-          currentUser={this.state.currentUser}
-          users={this.state.users}
-        />
+          <Grid className="">
+            <Grid.Column   width={5}>
+              <Friends />
+            </Grid.Column>
+            <Grid.Column width={11}>
+              <Main
+                handleLogout={this.handleLogout}
+                handleUserLogin={this.handleUserLogin}
+                currentUser={this.state.currentUser}
+                users={this.state.users}
+              />
+            </Grid.Column>
+          </Grid>
       </>
     )
   }

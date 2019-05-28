@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
-import { Form, Segment, Button } from 'semantic-ui-react'
+import { Form, Button } from 'semantic-ui-react'
 
 const initialState = {
   error: false,
@@ -45,7 +45,6 @@ class Login extends React.Component {
 
   render() {
     console.log('Login props', this.props);
-    const { fields } = this.state
     return (
       <div>
         <div className="ui form error">

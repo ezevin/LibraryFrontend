@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Card, Image, Grid, Container, Reveal } from 'semantic-ui-react'
+import { Button, Card, Image } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 class BookCover extends Component {
 
@@ -11,6 +12,9 @@ class BookCover extends Component {
     this.setState({details: !this.state.details})
   }
 
+  handleMessage = () => {
+  }
+
   render(){
     // debugger
       const { title, author, genre, description, image, id } = this.props.books
@@ -18,9 +22,9 @@ class BookCover extends Component {
       if(this.state.details === false){
       return(
         <center>
-            <Card raised image={image}>
+            <Card>
               <div id={id} className="card two wide column">
-                  <Image class="ui image" src={image} alt={title} onClick={this.toggleDetails} />
+                  <Image className="ui image" src={image} alt={title} onClick={this.toggleDetails} />
               </div>
             </Card><br />
         </center>
@@ -38,9 +42,12 @@ class BookCover extends Component {
                </Card.Description>
              </Card.Content>
              <Card.Content extra>
-                 <Button color="brown"onClick={() =>this.props.onClick(this.props.books)} >
+                 <Button  color="brown"onClick={() =>this.props.onClick(this.props.books)} >
                    Add To BookShelf
                  </Button>
+                 <Link to="/messages">
+                  <Button value={title} onClick={this.props.getTitle}>Leave a Comment</Button>
+                 </Link>
              </Card.Content>
            </Card>
           </center>

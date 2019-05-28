@@ -9,7 +9,7 @@ body {
   background-image:url(http://www.monmouthblues.com/wp-content/uploads/2018/03/Modern-Wood-Wall-Panels.jpg);
   font-family: !important 'Lobster', cursive;
   font-weight: bold;
-  font-size: large;
+  font-size: x-large;
   word-wrap: normal;
   color: !important #76737C
 
@@ -37,6 +37,31 @@ code {
   text-shadow: 3px 2px black
 }
 
+header {
+  color: #A3A2A7;
+  text-shadow: 3px 2px black;
+  font-family: 'Lobster', cursive;
+}
+
+h1 {
+  color: #A3A2A7;
+  text-shadow: 3px 2px black;
+  font-family: 'Lobster', cursive;
+  text-decoration: underline;
+}
+
+h2 {
+  color: #A3A2A7;
+  text-shadow: 3px 2px black;
+  font-family: 'Lobster', cursive;
+}
+
+h3 {
+  color: #A3A2A7;
+  text-shadow: 3px 2px black;
+  font-family: 'Lobster', cursive;
+}
+
 .buttonColor{
   color: #462016
 }
@@ -59,4 +84,27 @@ code {
   color: #A3A2A7;
   font-size: xx-large;
   text-shadow: 3px 2px #0A0806;
+}
+
+.image{
+  transform: scale(1.05)
+}
+
+.read {
+  opacity: 0.5;
+  filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+.looks{
+  border-style: dashed;
+  border-color: green;
+}
+
+.box{
+  border-style: solid;
+  border-color: black
+}
+
+.friends{
+  align-self: flex-start;
 }

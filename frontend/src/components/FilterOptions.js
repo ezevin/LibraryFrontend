@@ -1,81 +1,68 @@
 import React from 'react'
-import { Search, Form, Reveal, Grid } from 'semantic-ui-react'
-
-import FilterTitles from './FilterTitles'
+import { Search, Form, Grid } from 'semantic-ui-react'
 
 class FilterOptions extends React.Component {
 
   state = {
     value: "",
     filters: "",
-    search: true
+    search: true,
+    filteredBooks: []
   }
 
   handleChange = (e, {value}) => {
     this.setState({ value }, console.log(e.target.value))
   }
 
-  handleFilter = (e) => {
-    let value = e.target.value
-    this.props.books.filter(book => {
-    if (value === book.genre){
-      console.log(book)
-      return book
-    }})
+filtered = (e) => {
+    this.setState({value: e.target.value})
   }
 
   render(){
+    const { value } = this.state.value
+    // console.log(value);
 
-    const { value } = this.state
-
+    // console.log(this.props.books);
+    // const filtered = this.props.books.filter(book => {
+      // return book.genre === value
+    // })
     return (
       <>
         <center>
-          <br />
-          <Form>
-            <p className="color">Search By Title:</p>
-            <Search onSearchChange={this.props.onSearchChange} showNoResults={false} />
-          </Form>
+          <h2 className="color">Search By Title:</h2>
+            <Search width={15} onSearchChange={this.props.onSearchChange} showNoResults={false} />
+          <h2 className="color">Sort By:</h2>
         </center>
-        <center>
-        <br />
-        <div className="color">Sort by:</div><br />
-          <Form>
-            <Grid>
-              <Grid.Row columns={2}>
-               <Grid.Column width={8}>
-                 <label>
-                  <span className="color">Title:     </span>
-                   <input  type="radio" value="Titles" checked={value === 'Titles'} onChange={this.props.titles}
-                   onClick={this.handleTitleSearch}/>
-                 </label>
-                 <label>
-                 <a>   </a>
-                 <span className="color">Author:     </span>
-                   <input type="radio" value="Authors" checked={value === 'Authors'} onChange={this.props.authors}/>
+        <Grid className="">
+          <Grid.Column width={9} className="">
 
-                 </label>
-                 <br/>
-              </Grid.Column>
-                <Grid.Column  >
-                    <span className="color">Genre:     </span>
-                  <Form.Field >
-                    <select onChange={this.props.filter}>
-                        <option value="null" width={6}></option>
+              <h3 className="color">Genre:</h3>
+
+
+                <Form>
+                  <Form.Field  width={8}>
+                    <select onChange={this.props.genres}>
+                      <option value="null" ></option>
                       {
                         this.props.books.map(book =>
-                          <option value={book.genre}>{book.genre}</option>)
+                          <option key={book.id} value={book.genre}>{book.genre}</option>)
                       }
                     </select>
-                    <Form.Button color="black">Submit</Form.Button>
                   </Form.Field>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Form>
-        </center>
-        </>
+                </Form>
 
+            </Grid.Column>
+            <Grid.Column width={7} className="">
+              <Form>
+              <span className="color">Title:          </span>
+              <input  type="radio" value="Titles" checked={value === 'Titles'} onChange={this.props.titles}
+                />
+              <span className="color">Author:          </span>
+              <input type="radio" value="Authors" checked={value === 'Authors'} onChange={this.props.authors}/>
+            </Form>
+        </Grid.Column>
+      </Grid>
+    </>
     )
   }
 }

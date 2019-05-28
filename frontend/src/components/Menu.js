@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { Menu, Form, Button } from 'semantic-ui-react'
+import { Menu, Form, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-
-import MyShelf from './MyShelf'
 
 
 export default class NavBar extends Component {
@@ -30,7 +28,7 @@ export default class NavBar extends Component {
   }
 
   render() {
-    console.log(this.props.users);
+    // console.log(this.props.users);
     const { activeItem } = this.state
 
     return (
@@ -40,28 +38,28 @@ export default class NavBar extends Component {
             name='library'
             active={activeItem === 'library'}
             >
-              Library
+            <Icon className="icon" name="book" />  Library
           </Menu.Item>
         </Link>
         <Link to="/bookshelf">
         <Menu.Item
           name='library'
           active={activeItem === 'bookshelf'}>
-            BookShelf
+            <Icon className="icon" name="book" />BookShelf
         </Menu.Item>
         </Link>
         <Link to="/newbook">
           <Menu.Item
             name='addToShelf'
             active={activeItem === 'AddToShelf'}>
-            Add a Book
+            <Icon  bordered className="icon" name="book" />Add a Book
           </Menu.Item>
         </Link>
         <Link to="/profile">
           <Menu.Item
             name='profile'
             active={activeItem === 'profile'}>
-            Profile
+            <Icon  bordered className="icon" name="address card outline" />Profile
           </Menu.Item>
         </Link>
           {this.props.currentUser ?
@@ -70,7 +68,7 @@ export default class NavBar extends Component {
               floated='right'
               name='logout'
               active={activeItem === 'logout'}>
-              Logout
+              <Icon  bordered className="icon" name="user secret" />Logout
             </Menu.Item>
           </div>
           :
@@ -79,26 +77,30 @@ export default class NavBar extends Component {
           floated='right'
           name='login'
           active={activeItem === 'login'}>
-          Login
+            <Icon  bordered className="icon" name="user secret" />Login
           </Menu.Item>
           </Link>
         }
         {
             this.props.currentUser ?
             <div className="">
-              {`Welcome ${this.props.currentUser.name}`}
+            <span>  {`Welcome ${this.props.currentUser.name}`} </span>
             </div>
             :
             <div className="">
-              {`Welcome!`}
+              <center><span align="right"> {`Welcome!`} </span></center>
             </div>
           }
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Input placeholder='name' />
-        </Form>
       </Menu>
     )
   }
 }
 
 // {
+
+
+
+
+// <Form onSubmit={this.handleSubmit}>
+//   <Form.Input placeholder='name' />
+// </Form>
