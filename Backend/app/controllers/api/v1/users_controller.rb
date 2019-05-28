@@ -13,18 +13,22 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def show
-      @users = User.all
+      # @users =
     end
-    
+
     def create
-      @user = User.create(user_params)
-      if @user.valid?
-          session[:user_id] = @user.id
-          redirect_to @user
-      else
-        flash[:errors] = @user.errors.full_messages
-        redirect_to new_book_path
-      end
+      # byebug
+      # {name: "", password: ""}
+      @user = User.create(name: params[:name], password: params[:password])
+
+      render json: @user
+      # if @user.valid?
+      #     session[:user_id] = @user.id
+      #     redirect_to @user
+      # else
+      #   flash[:errors] = @user.errors.full_messages
+      #   redirect_to new_user_path
+      # end
     end
 
     # def show
@@ -63,6 +67,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def user_params
+      # {user: {name: "", password: ""}}
         params.require(:user).permit(:name, :password)
     end
 

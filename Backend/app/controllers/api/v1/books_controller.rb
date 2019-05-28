@@ -20,18 +20,21 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def show
-      @books = Book.all
+      @book = Book.first
+      render json: @book
   end
 
   def create
       @book = Book.create(book_params)
-      if @book.valid?
-          session[:book_id] = @book.id
-          redirect_to @book
-      else
-        flash[:errors] = @book.errors.full_messages
-        redirect_to new_book_path
-      end
+      render json: @book
+      # byebug
+      # if @book.valid?
+      #     session[:book_id] = @book.id
+      #     redirect_to @book
+      # else
+      #   flash[:errors] = @book.errors.full_messages
+      #   redirect_to new_book_path
+      # end
   end
 
   def edit
