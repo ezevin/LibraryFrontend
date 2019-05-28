@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_184229) do
     t.string "title"
     t.string "author"
     t.string "genre"
+    t.text "description"
     t.string "image"
     t.boolean "read", default: false
     t.datetime "created_at", null: false

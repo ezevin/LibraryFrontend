@@ -1,0 +1,2 @@
+class Addtobookscolumn < ApplicationRecord
+end

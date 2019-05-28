@@ -12,15 +12,15 @@ class Api::V1::BooksController < ApplicationController
 
   def index
       @books = Book.all
-      render json: @books.to_json(only: [:title, :author, :genre, :image])
+      render json: @books.to_json
+  end
+
+  def new
+    @book = Book.new
   end
 
   def show
       @books = Book.all
-  end
-
-  def new
-      @book = Book.new
   end
 
   def create
@@ -55,7 +55,7 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def book_params
-      params.require(:book).permit(:title, :author, :genre, :image)
+      params.require(:book).permit(:title, :author, :genre, :description, :image)
   end
 
 end
