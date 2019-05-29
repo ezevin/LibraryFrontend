@@ -62,10 +62,16 @@ export default class NavBar extends Component {
             <Icon  bordered className="icon" name="address card outline" />Profile
           </Menu.Item>
         </Link>
+          {
+            this.props.currentUser &&
+            <div className="">
+            <span>  {`Welcome ${this.props.currentUser.username}!`} </span>
+            </div>
+          }
           {this.props.currentUser ?
           <div onClick={this.props.handleLogout}>
             <Menu.Item
-              floated='right'
+              float='right'
               name='logout'
               active={activeItem === 'logout'}>
               <Icon  bordered className="icon" name="user secret" />Logout
@@ -74,23 +80,13 @@ export default class NavBar extends Component {
           :
           <Link to="/login">
           <Menu.Item
-          floated='right'
+          float='right'
           name='login'
           active={activeItem === 'login'}>
             <Icon  bordered className="icon" name="user secret" />Login
           </Menu.Item>
           </Link>
         }
-        {
-            this.props.currentUser ?
-            <div className="">
-            <span>  {`Welcome ${this.props.currentUser.name}`} </span>
-            </div>
-            :
-            <div className="">
-              <center><span align="right"> {`Welcome!`} </span></center>
-            </div>
-          }
       </Menu>
     )
   }

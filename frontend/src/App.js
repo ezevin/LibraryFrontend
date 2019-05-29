@@ -11,60 +11,54 @@ import Friends from './components/Friends'
 class App extends React.Component {
 
   state = {
-    currentUser: null,
-    users: []
+    currentUser: null
   }
 
   componentDidMount(){
-    // const token = localStorage.getItem('token')
-
-      // if (!token) {
-      //   this.props.history.push("login")
-      // }
-      // if(token) {
-      //   fetch("http://localhost:3001/api/v1/current_user", {
-      //     headers: {
-      //       Authenticate: token
-      //     }
-      //   })
-      //   .then(res => res.json())
-      //   .then((user) =>{
-      //     if(!user.error){
-      //       this.setState({currentUser: user})
-      //     }
-      //   })
-      // }
-      fetch(`http://localhost:3001/api/v1/users`)
-      .then(res => res.json())
-      .then(data => this.setState({users:data}))
+    const token = localStorage.getItem("token")
+    console.log("token", token);
+    //
+    //   if (!token) {
+    //     this.props.history.push("login")
+    //   }
+      if(token) {
+        fetch("http://localhost:3001/api/v1/current_user", {
+          headers: {
+            Authenticate: token
+          }
+        })
+        .then(res => res.json())
+        .then((user) => {
+          if(!user.error){
+            this.setState({currentUser: user})
+          }
+        })
+      }
     }
 
-  addUser = user => {
-    this.setState({ users: [...this.state.users, user] })
-  }
+
 
   handleUserLogin = (user) => {
-    localStorage.setItem("token", user.token)
+    localStorage.setItem("token", user.id)
     this.setState({currentUser: user})
   }
 
   handleLogout = () => {
     localStorage.removeItem("token")
-
     this.setState({currentUser: null})
     this.props.history.push("login")
   }
 
   render(){
-    // console.log(this.state.users);
+    console.log("App is rendering", this.state);
     return (
       <>
         <Logo
           title={this.props.title}
           icon="paint brush"
           handlePageClick={this.handlePageClick}
+          handleLogout={this.handleLogout}
           currentUser={this.state.currentUser}
-          users={this.state.users}
           addUser={this.addUser}
         />
           <Grid className="">

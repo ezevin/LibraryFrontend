@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Button, Card, Image, Modal, Header, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 class BookCover extends Component {
@@ -23,7 +23,7 @@ class BookCover extends Component {
       return(
         <center>
             <Card>
-              <div id={id} className="card two wide column">
+              <div id={id} className="card">
                   <Image className="ui image" src={image} alt={title} onClick={this.toggleDetails} />
               </div>
             </Card><br />
@@ -50,6 +50,7 @@ class BookCover extends Component {
                  </Link>
              </Card.Content>
            </Card>
+          
           </center>
         )
       }

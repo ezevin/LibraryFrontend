@@ -1,6 +1,6 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom'
-import { Form, Button } from 'semantic-ui-react'
+import { withRouter, Link } from 'react-router-dom'
+import { Form, Button, Icon } from 'semantic-ui-react'
 
 const initialState = {
   error: false,
@@ -23,7 +23,7 @@ class Login extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    // console.log(this.state.fields);
+    console.log(this.state.fields);
     fetch('http://localhost:3001/api/v1/auth', {
       method: "POST",
       headers: {
@@ -32,20 +32,26 @@ class Login extends React.Component {
       },
       body: JSON.stringify(this.state.fields)
     })
-    .then(r => r.json())
+    .then(res => res.json())
     .then(data => {
-      if (data.error) {
+      if (data.error){
         this.setState({error: true})
       } else {
         this.props.handleUserLogin(data)
-        this.props.history.push("/library")
+        this.props.history.push("/bookshelf")
+        // console.log("data from api", data);
       }
     })
   };
 
+  onClick = () => {
+    this.setState({login: false})
+  }
+
   render() {
     console.log('Login props', this.props);
-    return (
+    const { fields } = this.state
+     return (
       <div>
         <div className="ui form error">
           {
@@ -55,23 +61,32 @@ class Login extends React.Component {
             </div>
           }
           <center>
-            <Form size='medium' onSubmit={this.handleSubmit}>
-               <Form.Input width={6}
-                 fluid icon='user'
-                 iconPosition='left'
-                 placeholder='Username'
-                 onChange={this.handleChange}/>
-               <Form.Input width={6}
-                 fluid icon='lock'
-                 iconPosition='left'
-                 placeholder='Password'
-                 type='password'
-                 onChange={this.handleChange}
-               />
-               <Button color='black' >
-                 Login
-               </Button>
-           </Form>
+            <Form inverted size='medium' onSubmit={this.handleSubmit}>
+               <Form.Group widths='equal'>
+                <Form.Input
+                  fluid icon='user'
+                  iconPosition='left'
+                  name="username"
+                  value={fields.username}
+                  placeholder='username'
+                  label='Username:'
+                  onChange={this.handleChange}/>
+                <Form.Input
+                  fluid icon='lock'
+                  name="password"
+                  type="password"
+                  iconPosition='left'
+                  label='Password:'
+                  placeholder='password'
+                  value={fields.password}
+                  onChange={this.handleChange}/>
+               </Form.Group>
+               <Button.Group>
+               <Button color='black' >Login</Button>
+               <Button.Or />
+               <Button color='blue' onClick={this.props.toggleClick}> Create An Account</Button>
+               </Button.Group>
+              </Form>
          </center>
         </div>
       </div>

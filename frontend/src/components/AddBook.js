@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Grid } from 'semantic-ui-react'
-
+import { Link } from 'react-router-dom'
 
 class AddBook extends Component {
 
@@ -35,9 +35,10 @@ class AddBook extends Component {
   }
 
   handleSubmit = (e) => {
+    // debugger
     const {title, author, genre, description, image} = this.state
     // e.preventDefault()
-    console.log("submit");
+    console.log("submit", this.state);
     fetch('http://localhost:3001/api/v1/books', {
       method: "POST",
       headers: {
@@ -50,8 +51,9 @@ class AddBook extends Component {
     })
     .then(res=>res.json())
     .then(data => {this.props.addBooks(data)})
-    this.setState(this.state)
+    this.props.history.push("library")
   }
+
 
   render(){
     console.log("final", this.state);
@@ -72,9 +74,12 @@ class AddBook extends Component {
              <label className="color">Book Cover (.jpg):</label>
              <Form.Input placeholder='Image' name="image" onChange={this.handleChange} />
          </Grid.Column>
+         <Grid.Column width={12}>
          <label className="color">Description:</label>
-        </Grid>
-        <Button type='submit' color="black">Add Book</Button>
+         <Form.TextArea width={12} placeholder='Description...' name='description' onChange={this.handleChange}/>
+         </Grid.Column>
+        </Grid><br />
+          <Button type='submit' onClick={this.library} color="black">Add Book</Button>
      </Form><br />
      </center>
     )

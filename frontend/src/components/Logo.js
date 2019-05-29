@@ -10,7 +10,7 @@ class Logo extends Component {
       <Header as='h1'>
         <br /><br />
         <center> <span className="textLarge">BookWyrm</span></center><br />
-        <NavBar currentUser={this.props.currentUser} users={this.props.users} addUser={this.props.addUser}/>
+        <NavBar currentUser={this.props.currentUser} users={this.props.users} addUser={this.props.addUser} handleLogout={this.props.handleLogout}/>
       </Header>
     );
   }
