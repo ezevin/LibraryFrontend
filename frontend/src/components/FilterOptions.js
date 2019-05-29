@@ -45,7 +45,7 @@ filtered = (e) => {
                       <option value="null" ></option>
                       {
                         this.props.books.map(book =>
-                          <option key={book.id} value={book.genre}>{book.genre}</option>)
+                          <option onChange={this.props.genres} key={book.id} value={book.genre}>{book.genre}</option>)
                       }
                     </select>
                   </Form.Field>

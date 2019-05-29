@@ -17,10 +17,7 @@ class App extends React.Component {
   componentDidMount(){
     const token = localStorage.getItem("token")
     console.log("token", token);
-    //
-    //   if (!token) {
-    //     this.props.history.push("login")
-    //   }
+
       if(token) {
         fetch("http://localhost:3001/api/v1/current_user", {
           headers: {
@@ -36,10 +33,8 @@ class App extends React.Component {
       }
     }
 
-
-
   handleUserLogin = (user) => {
-    localStorage.setItem("token", user.id)
+    localStorage.setItem("token", user.token)
     this.setState({currentUser: user})
   }
 

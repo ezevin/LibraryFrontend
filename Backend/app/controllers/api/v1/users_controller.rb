@@ -13,7 +13,9 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def show
-      # @users =
+      @user = User.find(params[:id])
+      # byebug
+      render json: @user
     end
 
     def create

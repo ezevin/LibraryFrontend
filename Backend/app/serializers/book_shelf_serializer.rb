@@ -1,3 +1,6 @@
 class BookShelfSerializer < ActiveModel::Serializer
-  attributes :id, :book_id, :user_id
+  # attributes :id, :user, :book
+  # belongs_to :user
+  # belongs_to :book
+
 end

@@ -50,7 +50,7 @@ class BookCover extends Component {
                  </Link>
              </Card.Content>
            </Card>
-          
+
           </center>
         )
       }

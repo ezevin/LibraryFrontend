@@ -9,8 +9,8 @@ class Api::V1::BookShelvesController < ApplicationController
   end
 
   def show
-      @bookshelves = BookShelf.all
-      render json: @bookshelves
+      @bookshelf = BookShelf.all
+      render json: @bookshelf
   end
 
   def create
@@ -22,8 +22,7 @@ class Api::V1::BookShelvesController < ApplicationController
   end
 
   def update
-      @bookshelf.update(book_params)
-      redirect_to book_path
+
   end
 
   def destroy

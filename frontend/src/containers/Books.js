@@ -26,7 +26,6 @@ class Books extends Component {
                             key={book.id}
                             books={book}
                             toggleDetails={this.props.toggleDetails}
-                            addToShelf={this.props.addToShelf}
                             onClick={this.props.onClick}
                             getTitle={this.props.getTitle}/>
                       </>
