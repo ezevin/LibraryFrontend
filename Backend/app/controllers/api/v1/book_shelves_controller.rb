@@ -10,17 +10,12 @@ class Api::V1::BookShelvesController < ApplicationController
 
   def show
       @bookshelves = BookShelf.all
+      render json: @bookshelves
   end
 
   def create
-      @bookshelf = BookShelf.create(bookshelf_params)
-      if @bookshelf.valid?
-          session[:book_id] = @bookshelf.id
-          redirect_to @bookshelf
-      else
-        flash[:errors] = @bookshelf.errors.full_messages
-        redirect_to new_bookshelf_path
-      end
+      @bookshelf = BookShelf.create(user_id: params[:user_id], book_id: params[:book_id])
+      render json: @bookshelf
   end
 
   def edit

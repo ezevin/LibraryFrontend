@@ -7,7 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 #Users
-jim = User.create(name: "Jim", password_digest: 'topsecret')
+bob = User.create(name: "Bob", password_digest: 'wow')
+jim = User.create(name: "Jim", password_digest: 'wow')
 sally = User.create(name: "Sally", password: "wow")
 abby = User.create(name: "Abby", password: "wow")
 dan = User.create(name: "Dan", password: "wow")

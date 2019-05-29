@@ -50,8 +50,9 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def update
-        @user.update(user_params)
-        redirect_to user_path
+        @user = User.find(params[:id])
+        @user.update(name: params[:name], age: params[:age], about_me: params[:about_me], picture: params[:picture])
+        render json: @user
     end
 
     def destroy

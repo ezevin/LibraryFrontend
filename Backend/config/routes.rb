@@ -8,11 +8,7 @@ Rails.application.routes.draw do
 
       post '/auth', to: 'auth#create'
       get '/current_user', to: 'auth#show'
-      # resources :application
-      # post
-      # post '/books/search', to: 'books#search'
-      # params[:key] => value
-      # get '/books/?q=:input?author=:author/:title', to: 'books#search'
+
     end
   end
 end

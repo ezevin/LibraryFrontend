@@ -1,2 +1,0 @@
-class Addtobookscolumn < ApplicationRecord
-end

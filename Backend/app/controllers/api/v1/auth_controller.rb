@@ -2,21 +2,25 @@ class Api::V1::AuthController < ApplicationController
 
   def create
     # byebug
-    user = User.find_by(name: params[:name])
+    user = User.find_by(name: params[:username])
+
     if user && user.authenticate(params[:password])
-      render json: {id: user.id, name: user.name}
+      token = issue_token({id:user.id})
+      render json: {id: user.id, username: user.name, token: token }
     else
       render json: {error: "Could not authenticate"}, status: 401
     end
   end
 
   def show
-    token = request.headers['Authenticate']
+    # token = request.headers['Authenticate']
+    # decoded = JWT.decode(token, 'secret', true, {algorithm: 'HS256'}).first
+    # id = decoded["id"]
 
-    user = User.find_by(id: token)
+    # user = User.find_by(id: id)
 
-    if user
-      render json: {id: user.id, name: user.name}
+    if current_user
+      render json: {id: current_user.id, username: current_user.name}
     else
       render json: {error: "Could not authenticate"}, status: 401
     end
