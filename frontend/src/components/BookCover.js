@@ -42,7 +42,7 @@ class BookCover extends Component {
                </Card.Description>
              </Card.Content>
              <Card.Content extra>
-                 <Button  color="brown"onClick={() =>this.props.onClick(this.props.books)} >
+                 <Button  color="brown"onClick={() =>this.props.addBook(this.props.books)} >
                    Add To BookShelf
                  </Button>
                  <Link to="/messages">

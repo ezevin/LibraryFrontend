@@ -26,9 +26,9 @@ class Api::V1::BookShelvesController < ApplicationController
   end
 
   def destroy
-      get_book.destroy
-      flash[:notice] = "You have deleted this book"
-      redirect_to bookshelves_path
+      get_bookshelf.destroy
+
+
   end
 
   private

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Button, Card, Image, Dimmer, Header, Segment  } from 'semantic-ui-react'
 
 class MyShelf extends Component {
 
@@ -8,16 +8,20 @@ class MyShelf extends Component {
     read: false
   }
 
+  handleShow = () => this.setState({ active: true })
+  handleHide = () => this.setState({ active: false })
+
   toggleDetails = () => {
     this.setState({details: !this.state.details})
   }
 
   handleRead = (e) => {
-    const back = document.getElementsByClassName('flip')
+    console.log(e.target);
+    const back = e.target.id
     e.preventDefault()
     this.setState({read: !this.state.read})
     if (this.state.read === true){
-      return back.opacity = 0.5
+      return   e.target.className = "black"
     }
   }
   // onDrag = (e, this.props.books) => {
@@ -27,13 +31,19 @@ class MyShelf extends Component {
   // }
 
   render(){
-      const { title, author, genre, image, id } = this.props.books
+      const { title, author, genre, image, description, id } = this.props.books
+
+      const { active } = this.state
+
       if(this.state.details === false){
       return(
         <center>
-            <Card className="flip">
-              <div id={id} className="card two wide column" onDrag={(e) => {console.log("drag")}}>
+            <Card >
+            <div id={id} className="card" onDrag={(e) => {console.log("drag")}}>
+              <Dimmer.Dimmable as={Segment} dimmed={active}>
                   <Image class="ui image" src={image} alt={title} onClick={this.toggleDetails} />
+              <Dimmer active={active} onClickOutside={this.handleHide} />
+              </Dimmer.Dimmable>
               </div>
             </Card>
         </center>
@@ -42,21 +52,22 @@ class MyShelf extends Component {
         return(
           <center>
             <Card onClick={this.toggleDetails}>
-             <Card.Content>
+             <Card.Content className="cardBack">
                <Image floated='right' size='mini' src={image} />
                <Card.Header>{title}</Card.Header>
                <Card.Meta>{author}</Card.Meta>
+                <Card.Meta>{genre}</Card.Meta>
                <Card.Description>
-                 {genre}
+                 {description}
                </Card.Description>
              </Card.Content>
              <Card.Content extra>
                <div className='two buttons'>
                  <Button color='red' onClick={()=>this.props.remove(this.props.books)}>
-                   Remove From BookShelf
+                   Return to Library
                  </Button>
-                 <Button basic color='brown'
-                    onClick={this.handleRead}>
+                 <Button id={id} basic color='brown'
+                    onClick={this.handleShow}>
                     I've Read This
                  </Button>
                </div>

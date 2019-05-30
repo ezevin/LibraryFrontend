@@ -209,7 +209,7 @@ class Main extends Component {
 
     let id = currentUser ? currentUser.id : null
 
-    const bookId = this.props.userBooks.map(shelf => {
+    const bookId = this.state.shelves.map(shelf => {
       if(shelf.user_id === id){
         return shelf.book_id
       }})
@@ -233,7 +233,7 @@ class Main extends Component {
             <Books {...props}
               books={filteredBooks}
               myBooks={this.state.myBooks}
-              onClick={this.handleClick}
+              addBook={this.handleClick}
               titles={this.handleTitleSort}
               authors={this.handleAuthorSort}
               genres={this.handleGenreSort}
