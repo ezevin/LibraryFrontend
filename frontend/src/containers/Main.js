@@ -16,19 +16,17 @@ class Main extends Component {
   state = {
     books: [],
     myBooks: [],
+    library: [],
     search: '',
     title: '',
     users: [],
     shelves: [],
     genre: [],
-    user_id: "",
-    book_id: "",
     currentId: ""
   }
 
   componentDidMount(){
     // const token = localStorage.getItem("token")
-
     // if (token) {
     //   this.props.history.push("login")
     // } else {
@@ -43,7 +41,7 @@ class Main extends Component {
       fetch(`http://localhost:3001/api/v1/book_shelves`)
       .then(res => res.json())
       .then(data => this.setState({shelves:data}))
-      // }
+
     }
 
 
@@ -96,11 +94,16 @@ class Main extends Component {
     console.log("book id", book.id)
     // if(!this.state.myBooks.includes(book))
     // this.setState({myBooks: [...this.state.myBooks, book]})
-    const { user_id, book_id } = this.state
     const cId = this.props.currentUser.id
+    // const userBooks = this.props.userBooks.map(book => book.book_id)
+    // const filtered = this.state.books.filter(book => {
+    //   if(!userBooks.includes(book.id)){
+    //     return book
+    //   }
+    // })
 
     console.log("id", cId);
-    this.state.users.map(user => {
+    this.state.users.filter(user => {
       if(user.id === cId){
         fetch('http://localhost:3001/api/v1/book_shelves', {
           method: "POST",
@@ -113,7 +116,10 @@ class Main extends Component {
            })
         })
         .then(res=>res.json())
-        .then(data => {this.setState({shelves: [...this.state.shelves, data]}, console.log("new book",this.state.shelves))})
+        .then(data => {
+          this.setState({shelves: [...this.state.shelves, data]}, console.log("new book",this.state.shelves))
+        })
+        .then(()=> this.props.fetchUserbooks())
       }
     })
   }
@@ -123,8 +129,35 @@ class Main extends Component {
     this.setState({title: e.target.value})
   }
 
+  libraryBooks = () => {
+    // const bookId = this.state.shelves.map(shelf => {
+    //   if(shelf.user_id === this.props.id){
+    //     return shelf.book_id
+    //   }})
+    // const filteredBooks = this.state.books.filter(book => {
+    //   if(!bookId.includes(book.id) ){
+    //     return book
+    //   }})
+    // this.setState({library:filteredBooks})
+  }
   /**********************/
   //    End Library     //
+  /**********************/
+
+  /**********************/
+  //      BookShelf     //
+  /**********************/
+
+  returnBook = (book) => {
+    const selectedShelf = this.state.shelves.find(shelf => shelf.book_id === book.id && shelf.user_id === this.props.id)
+    fetch(`http://localhost:3001/api/v1/book_shelves/${selectedShelf.id}`, {
+      method: "delete"
+    })
+      .then(()=> this.props.fetchUserbooks())
+  }
+
+  /**********************/
+  //   End Bookshelf    //
   /**********************/
 
   /**********************/
@@ -165,6 +198,10 @@ class Main extends Component {
   /**********************/
 
   render(){
+
+
+    console.log("library", this.state.library)
+    const genre = this.state.books.map(book => book.genre)
     /**********************/
     // Library Book Filter//
     /**********************/
@@ -172,7 +209,7 @@ class Main extends Component {
 
     let id = currentUser ? currentUser.id : null
 
-    const bookId = this.state.shelves.map(shelf => {
+    const bookId = this.props.userBooks.map(shelf => {
       if(shelf.user_id === id){
         return shelf.book_id
       }})
@@ -184,27 +221,13 @@ class Main extends Component {
       }
     })
 
-    /**********************/
-    //   My Book Render   //
-    /**********************/
-    //
-    // const shelf = this.state.shelves.map(shelf => shelf.book_id)
-    // const bookFind = this.state.books.map(book => book.id)
-    // const book = this.state.shelves.forEach(book => {
-    //    return bookFind.find(book.book_id)
-    //
-    // //   if (book.id === shelf) {
-    // //     this.setState({myBooks: [...this.state.myBooks, book]})
-    //   }
-    // )
-
-    // console.log("my books", book)
-
+    console.log('USER BOOKS THING',
+    this.props.userBooks)
 
       return(
         <>
           <Route path="/login" render={() => {
-            return <LoginPage  handleUserLogin={this.props.handleUserLogin}  handleLogout={this.props.handleLogout} addUsers={this.addUsers} users={this.state.users}/>}}/> <br />
+            return <LoginPage  handleUserLogin={this.props.handleUserLogin}  handleLogout={this.props.handleLogout} addUsers={this.addUsers} users={this.state.users} currentUser={this.props.currentUser}/>}}/> <br />
 
           <Route path="/library" render={(props) =>
             <Books {...props}
@@ -218,25 +241,28 @@ class Main extends Component {
               onSearchChange={this.handleSearch}
               getTitle={this.getTitle}
               shelf={this.state.bookshelf} addUserBook={this.addUserBook} currentUser={this.props.currentUser}
+              genre={genre}
           />} />
 
           <Route path="/bookshelf" render={(props) =>
             <BookShelf {...props}
-              books={this.state.myBooks}
-              remove={this.handleShelf}
+              books={this.props.userBooks}
+              remove={this.returnBook}
               onClick={this.handleClick}
               titles={this.handleTitleSort}
               authors={this.handleAuthorSort}
               onSearchChange={this.handleSearch}
-              currentUser={this.props.currentUser}/>} />
+              currentUser={this.props.currentUser}
+              genre={genre}
+              />} />
 
           <Route path="/newbook" render={(props) => <AddBook {...props} addBooks={this.addBooks}/>} />
 
-          <Route path="/profile" render={(props) => <Profile {...props} currentUser={this.props.currentUser} users={this.state.users}/>}/>
+          <Route path="/profile" render={(props) => <Profile {...props} currentUser={this.props.currentUser} users={this.state.users} fetchUserData={this.props.fetchUserData}/>}/>
 
           <Route path="/messages" render={(props) => <Messages {...props} title={this.state.title}/>}/>
 
-          <Route path="/editProfile" render={(props) => <EditProfile {...props} currentUser={this.props.currentUser}/>}/>
+          <Route path="/editProfile" render={(props) => <EditProfile {...props} currentUser={this.props.currentUser} users={this.state.users}/>}/>
         </>
       )
   }

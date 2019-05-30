@@ -37,6 +37,7 @@ class Signup extends Component {
     })
     .then(res=> res.json())
     .then(data => {this.props.addUsers(data)})
+    // .then(()=> this.props.fetchUserData())
     // this.props.history.push("login")
   }
 
@@ -62,7 +63,6 @@ class Signup extends Component {
             </Form.Group>
 
               <Button type="submit" color='black'>Create Account</Button>
-            
           </Form>
         </center>
       )

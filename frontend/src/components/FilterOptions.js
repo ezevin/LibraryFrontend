@@ -20,7 +20,7 @@ filtered = (e) => {
 
   render(){
     const { value } = this.state.value
-    // console.log(value);
+    console.log(this.props.genre);
 
     // console.log(this.props.books);
     // const filtered = this.props.books.filter(book => {
@@ -44,8 +44,8 @@ filtered = (e) => {
                     <select onChange={this.props.genres}>
                       <option value="null" ></option>
                       {
-                        this.props.books.map(book =>
-                          <option onChange={this.props.genres} key={book.id} value={book.genre}>{book.genre}</option>)
+                        this.props.genre ? this.props.genre.map(book =>
+                          <option onChange={this.props.genres}  value={book}>{book}</option>) : null
                       }
                     </select>
                   </Form.Field>

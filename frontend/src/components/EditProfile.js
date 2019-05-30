@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input, TextArea, Button, Select } from 'semantic-ui-react'
+import { Form, Input, TextArea, Button } from 'semantic-ui-react'
 
 class EditProfile extends React.Component {
 
@@ -45,6 +45,10 @@ class EditProfile extends React.Component {
   }
 
   render(){
+    return(
+    this.props.users.map(user =>{
+    if(this.props.currentUser.id === user.id){
+      console.log(user);
     return (
       <Form color="black" size="large" onSubmit={this.handleSubmit}>
         <Form.Group>
@@ -53,7 +57,7 @@ class EditProfile extends React.Component {
             control={Input}
             name="name"
             label='Name'
-            placeholder='Name'
+            placeholder={user.name}
             onChange={this.handleChange}
           />
           <Form.Field
@@ -61,7 +65,7 @@ class EditProfile extends React.Component {
             control={Input}
             name="age"
             label='Age'
-            placeholder='Age'
+            placeholder={user.age}
             onChange={this.handleChange}
           />
           <Form.Field
@@ -70,7 +74,7 @@ class EditProfile extends React.Component {
           control={Input}
           name="picture"
           label='Profile Picture'
-          placeholder='Profile Picture'
+          placeholder={user.picture}
           onChange={this.handleChange}
           />
         </Form.Group>
@@ -79,7 +83,7 @@ class EditProfile extends React.Component {
           control={TextArea}
           label='About Me'
           name="about"
-          placeholder='About Me' onChange={this.handleChange}
+          placeholder={user.about_me} onChange={this.handleChange}
         />
         <Form.Field
           id='form-button-control-public'
@@ -87,8 +91,9 @@ class EditProfile extends React.Component {
           content='Update Profile'
         />
       </Form>
-    )
-  }
+    )}
+    })
+  )}
 }
 
 export default EditProfile

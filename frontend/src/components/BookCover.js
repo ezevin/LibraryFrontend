@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Image, Modal, Header, Icon } from 'semantic-ui-react'
+import { Button, Card, Image, Modal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 class BookCover extends Component {

@@ -11,7 +11,11 @@ import Friends from './components/Friends'
 class App extends React.Component {
 
   state = {
-    currentUser: null
+    books: [],
+    currentUser: null,
+    userBooks: [],
+    id: '',
+    library: []
   }
 
   componentDidMount(){
@@ -29,6 +33,12 @@ class App extends React.Component {
           if(!user.error){
             this.setState({currentUser: user})
           }
+          let id = this.state.currentUser.id
+            fetch(`http://localhost:3001/api/v1/users/${id}`)
+            .then(res => res.json())
+            .then(data => this.setState({userBooks:data.books}, console.log("UserBooks", this.state.userBooks)))
+
+            this.setState({id: id})
         })
       }
     }
@@ -44,8 +54,36 @@ class App extends React.Component {
     this.props.history.push("login")
   }
 
+  fetchUserbooks = () => {
+    let id = this.state.currentUser.id
+    fetch(`http://localhost:3001/api/v1/users/${id}`)
+    .then(res => res.json())
+    .then(data => this.setState({userBooks:data.books}, console.log("UserBooks", this.state.userBooks)))
+  }
+
+  // fetchBooks = () => {
+  //   fetch(`http://localhost:3001/api/v1/books`)
+  //   .then(res => res.json())
+  //   .then(data => this.setState({books:data}))
+  //
+  //   const ub = this.state.userBooks.map(book => book.book_id)
+  //   console.log(ub);
+  //
+  //   this.state.books.filter(book => {
+  //     if(!ub.includes(book.id))
+  //     return this.setState({library: book})
+  //   })
+  // }
+
+  fetchUserData = () => {
+    let id = this.state.currentUser.id
+    fetch(`http://localhost:3001/api/v1/users/${id}`)
+    .then(res => res.json())
+    .then(data => this.setState({userBooks:data}))
+  }
+
   render(){
-    console.log("App is rendering", this.state);
+
     return (
       <>
         <Logo
@@ -62,10 +100,15 @@ class App extends React.Component {
             </Grid.Column>
             <Grid.Column width={11}>
               <Main
+                fetchUserbooks={this.fetchUserbooks}
+                fetchUserData={this.fetchUserData}
+                fetchBooks={this.fetchBooks}
                 handleLogout={this.handleLogout}
                 handleUserLogin={this.handleUserLogin}
                 currentUser={this.state.currentUser}
                 users={this.state.users}
+                userBooks={this.state.userBooks}
+                id={this.state.id}
               />
             </Grid.Column>
           </Grid>

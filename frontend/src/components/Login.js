@@ -1,6 +1,6 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom'
-import { Form, Button, Icon } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
+import { Form, Button} from 'semantic-ui-react'
 
 const initialState = {
   error: false,
@@ -61,7 +61,7 @@ class Login extends React.Component {
             </div>
           }
           <center>
-            <Form inverted size='medium' onSubmit={this.handleSubmit}>
+            <Form inverted size='large' onSubmit={this.handleSubmit}>
                <Form.Group widths='equal'>
                 <Form.Input
                   fluid icon='user'

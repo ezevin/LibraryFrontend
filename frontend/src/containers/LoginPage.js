@@ -27,7 +27,7 @@ class LoginPage extends Component {
         return (
           <Signup
             addUsers={this.props.addUsers}
-            users={this.props.users}/>
+            users={this.props.users} currentUser={this.props.currentUser}/>
       )}
   }
 }
