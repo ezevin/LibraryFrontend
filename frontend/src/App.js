@@ -84,6 +84,7 @@ class App extends React.Component {
 
   render(){
 
+    // <Friends />
     return (
       <>
         <Logo
@@ -96,7 +97,6 @@ class App extends React.Component {
         />
           <Grid className="">
             <Grid.Column   width={5}>
-              <Friends />
             </Grid.Column>
             <Grid.Column width={11}>
               <Main

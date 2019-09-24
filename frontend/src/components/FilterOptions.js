@@ -21,11 +21,6 @@ filtered = (e) => {
   render(){
     const { value } = this.state.value
     console.log(this.props.genre);
-
-    // console.log(this.props.books);
-    // const filtered = this.props.books.filter(book => {
-      // return book.genre === value
-    // })
     return (
       <>
         <center>

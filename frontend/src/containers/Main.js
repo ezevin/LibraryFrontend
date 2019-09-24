@@ -73,13 +73,24 @@ class Main extends Component {
     )})
   }
 
-  handleGenreSort = (e) => {
-    const genre = e.target.value
-    console.log("ill get you now", genre);
-    const newBook = this.state.books.filter(book => {
-      return book.genre === genre
-    })
-    this.setState({books: newBook})
+  handleGenreSort = (e, {value}) => {
+
+      const filteredBooks = this.state.books.filter(book =>{
+        return book.name.toLowerCase().includes(this.state.search.toLowerCase())
+      })
+
+      const input = this.state.filters.type
+      if(value === "null"){
+        return filteredBooks
+      }else {
+        const filters = filteredBooks.filter(book => {
+          if(book.genre.includes(input)){
+            console.log("this", book)
+            return book
+          }
+        })
+        return filters
+      }
   }
 
   /**********************/

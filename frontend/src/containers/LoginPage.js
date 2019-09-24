@@ -26,6 +26,8 @@ class LoginPage extends Component {
       )} else {
         return (
           <Signup
+            handleUserLogin={this.props.handleUserLogin}
+            handleLogout={this.props.handleLogout}
             addUsers={this.props.addUsers}
             users={this.props.users} currentUser={this.props.currentUser}/>
       )}
